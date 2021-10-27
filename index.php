@@ -1,4 +1,9 @@
 <?php
 
 //Inicio de la autocarga
-include "bd/autoloader.php";
+require "app/autoloader.php";
+
+spl_autoload_register("autoloader");
+
+//Carga del front controller
+require "app/frontcontroller.php";
