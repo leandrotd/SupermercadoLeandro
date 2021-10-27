@@ -1,7 +1,6 @@
 <?php
-
 //Defino las rutas de los ficheros a utilizar
-define('RUTAS', ['../bd', '../controlador', '../modelo', '../modelo/entidades', '../vista', '../vista/factura', '../vista/productos', '../vista/usuarios']);
+define('RUTAS', ['bd', 'controlador', 'modelo', 'modelo/entidades', 'vista', 'vista/factura', 'vista/productos', 'vista/usuarios']);
 
 //Funcion que realiza la autocarga
 function autoloader($clase)
@@ -12,9 +11,8 @@ function autoloader($clase)
 
         if (file_exists($filename)) {
             require_once $filename;
+
             return;
         }
     }
 }
-
-spl_autoload_register("autoloader");
