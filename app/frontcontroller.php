@@ -1,15 +1,13 @@
 <?php
-
-if (!isset($_REQUEST['p'])) {
+$direccion =  substr($_SERVER['REQUEST_URI'], 21);
+if (strlen($direccion) == 0 || strlen($direccion) == 9) {
     //Llamada a la página principal
-    call_user_func(array(new ProductoController(), 'index'));
+    call_user_func(array(new ProductoController(), 'lista'));
 } else {
-    //Obtenemos el controlador a utilizar
-    $controlador = new (ucwords(strtolower($_REQUEST['p'])) . 'Controller');
-    
-    //Recogemos la accion a realizar
-    $accion = isset($_REQUEST['a']) ? strtolower($_REQUEST['a']) : 'index';
+    $controlador = explode("/", $direccion)[1];
+    $controlador = new (ucwords($controlador) . 'Controller');
 
-    //Ejecutamos
+    $accion = isset(explode("/", $direccion)[2]) ? explode("/", $direccion)[2] : 'lista';
+
     call_user_func(array($controlador, $accion));
 }
