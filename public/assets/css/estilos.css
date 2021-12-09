@@ -1,11 +1,13 @@
-/* Litado de los colores a utilizar */
+/* Listado de los colores a utilizar */
 :root {
     /* Colores de fondo y texto */
     --main-bg-color: #effbff;
     --link-color: #009df8;
-    --card-header-color: #cdd9dd;
-
-    --color-1: #343a40;
+    --card-header-main-color: #dcddcd;
+    --card-header-warning-color: #ffd673;
+    --card-body-warning-color: #fae364;
+    --card-header-info-color: #6cdaff;
+    --card-body-info-color: #a6e5fa;
 
     /* Colores de mensajes al usuario */
     --primary-color: #00bfff;
@@ -26,20 +28,31 @@ img {
     height: auto;
 }
 
-nav > a > img {
-    max-width: 100px;
+nav>a>img {
+    max-width: 150px;
 }
 
 body {
     display: flex;
     flex-direction: column;
     height: 100%;
-    /*min-width: 1100px;*/
 }
 
 body>div {
     height: 100%;
     flex-grow: 1;
+}
+
+.contenedorPrincipal {
+    min-width: 600px;
+}
+
+.centrarVertical {
+    align-items: center;
+}
+
+.ocultar {
+    display: none;
 }
 
 /* Modificación de colores */
@@ -62,10 +75,27 @@ a {
     border-color: var(--danger-border-color);
 }
 
-html, body>div {
+html,
+body>div {
     background-color: var(--main-bg-color);
 }
 
-.card-header {
-    background-color: var(--card-header-color);
+.card-header-main {
+    background-color: var(--card-header-main-color);
+}
+
+.card-header-warning {
+    background-color: var(--card-header-warning-color);
+}
+
+.card-body-warning {
+    background-color: var(--card-body-warning-color);
+}
+
+.card-header-info {
+    background-color: var(--card-header-info-color);
+}
+
+.card-body-info {
+    background-color: var(--card-body-info-color);
 }
