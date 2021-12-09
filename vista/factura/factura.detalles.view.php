@@ -61,7 +61,7 @@ if (isset($_POST['pagar']) && isset($carrito) && !empty($carrito)) {
         echo '<tr>
               <td>';
         if ($producto->getFoto() == null || !file_exists(getcwd() . "/public/assets/images/" . $producto->getFoto())) {
-          echo '<img src="/SupermercadoLeandro/public/assets/images/imgprueba.png" height="100" width="100" alt="imgDefecto">';
+          echo '<img src="/SupermercadoLeandro/public/assets/images/logo.png" height="100" width="100" alt="imgDefecto">';
         } else {
           echo '<img src="/SupermercadoLeandro/public/assets/images/' . $producto->getFoto() . '" height="100" width="100" alt=' . $producto->getFoto() . '>';
         }
