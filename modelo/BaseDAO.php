@@ -7,8 +7,6 @@ abstract class BaseDAO
 {
 
     protected $pdo;
-    protected $table;
-    protected $entity;
 
     /**
      * Conexion con la base de datos.

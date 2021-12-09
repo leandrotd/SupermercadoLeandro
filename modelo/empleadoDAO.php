@@ -95,7 +95,7 @@ class EmpleadoDAO extends BaseDAO
   /**
    * Select de todos los admins.
    *
-   * @return array|false<b> Si tuvo exito devuelve el array con los empleados, en caso contrario false.
+   * @return numeric|false<b> Si tuvo exito devuelve el array con los empleados, en caso contrario false.
    */
   public function getCantidadAdmins()
   {
