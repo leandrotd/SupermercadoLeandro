@@ -9,7 +9,8 @@ if (strlen($direccion) == 0 || strlen($direccion) == 9 || strlen($direccion) == 
 } else {
     //Recojo el nombre del controlador y la página a visualizar
     $controlador = explode("/", $direccion)[1];
-    $controlador = new (ucwords($controlador) . 'Controller');
+    $controlador = ucwords($controlador) . 'Controller';
+    $controlador = new $controlador;
 
     $accion = isset(explode("/", $direccion)[2]) ? explode("?", explode("/", $direccion)[2])[0] : 'lista';
 
