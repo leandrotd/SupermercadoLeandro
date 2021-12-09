@@ -3,7 +3,7 @@
 $direccion =  substr($_SERVER['REQUEST_URI'], 21);
 
 //Compruebo si no llama a ningun archivo o solo a index.php
-if (strlen($direccion) == 0 || strlen($direccion) == 9) {
+if (strlen($direccion) == 0 || strlen($direccion) == 9 || strlen($direccion) == 10) {
     //Llamo a la pagina por defecto
     call_user_func(array(new ProductoController(), 'lista'));
 } else {
