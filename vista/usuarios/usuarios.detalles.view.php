@@ -1,137 +1,117 @@
-<div class="container-fluid h-100 w-75 py-2">
-  <div class="row">
+<?php
+//Obtiene el usuario que tiene iniciada sesión
+$actual = $this->getUsuario($_SESSION['usuario']);
+
+//El usuario a modificar
+$usuario = $this->getUsuarioEmail($_GET['email']);
+
+//El objeto empleado del usuario a modificar si existe
+$empleado = $this->getEmpleado($usuario->getIdUsuario());
+
+//Comprueba si el email no esta definido en el $_GET o si el usuario que tenga sesion iniciada no sea administrador o distinto del usuario que se quiera ver los detalles
+if (!isset($_GET['email']) || ($this->getPermisos($_SESSION['usuario']) != 0 && $actual->getIdUsuario() != $usuario->getIdUsuario())) {
+  header('Location:/SupermercadoLeandro/index.php/producto/lista');
+}
+?>
+<div class="card-header card-header-main">
+  Informacion de <?php echo $usuario->getNombre(); ?>
+</div>
+<div class="card-body">
+  <a class="btn btn-secondary mb-3" href="<?php
+                                          //Dependiendo del usuario, que el botón volver vaya a una dirección u otra
+                                          if ($this->getPermisos($_SESSION['usuario']) == 0) {
+                                            echo "/SupermercadoLeandro/index.php/empleado/lista";
+                                          } else {
+                                            echo "/SupermercadoLeandro/index.php/producto/lista";
+                                          } ?>"><i class="bi bi-arrow-left"></i> Volver</a>
+  <div class="form-group row">
     <div class="col">
-      <div class="card">
-        <div class="card-header">
-          "Nombre de usuario"
-        </div>
-        <div class="card-body">
-          <a class="btn btn-primary mb-3" href="/SupermercadoLeandro/index.php/producto/lista">
-            Atrás
-          </a>
-          <form method="post" action="/SupermercadoLeandro/index.php/producto">
-            <div class="form-group row">
-              <label for="email" class="col-form-label col-sm-2">
-                Email
-              </label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="email" required minlength="2" />
-
-                <!--<div class="alert alert-danger" *ngIf="username.invalid && (username.dirty || username.touched)">
-                  <div class="" *ngIf="!username.valid">
-                    {{ "UsernameRequired" | translate }}
-                  </div>
-                </div>-->
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="contrasena" class="col-form-label col-sm-2">
-                Contraseña
-              </label>
-              <div class="col-sm-6">
-                <div class="input-group">
-                  <input type="password" class="form-control" name="contrasena" required id="contrasena"/>
-
-                  <div class="input-group-append">
-                    <button class="btn btn-secondary" onclick="mostrarContrasena(0)">
-                      <em id="iconoContrasena" class="bi-eye-slash"></em>
-                    </button>
-                  </div>
-                </div>
-
-                <!--<div class="alert alert-danger" *ngIf="password.invalid && (password.dirty || password.touched)">
-                  <div class="" *ngIf="!password.valid">
-                    {{ "PasswordRequired" | translate }}
-                  </div>
-                </div>-->
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="nombre" class="col-form-label col-sm-2">
-                Nombre
-              </label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="nombre" required />
-                <!--<div class="alert alert-danger" *ngIf="
-              first_name.invalid && (first_name.dirty || first_name.touched)
-            ">
-                  <div class="" *ngIf="!first_name.valid">
-                    {{ "FirstNameRequired" | translate }}
-                  </div>
-                </div>-->
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="apellidos" class="col-form-label col-sm-2">
-                Apellidos
-              </label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="apellidos" required />
-                <!--<div class="alert alert-danger" *ngIf="
-              middle_name.invalid && (middle_name.dirty || middle_name.touched)
-            ">
-                  <div class="" *ngIf="!middle_name.valid">
-                    {{ "MiddleNameRequired" | translate }}
-                  </div>
-                </div>-->
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="edad" class="col-form-label col-sm-2">
-                Edad
-              </label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="edad" required />
-                <!--<div class="alert alert-danger" *ngIf="last_name.invalid && (last_name.dirty || last_name.touched)">
-                  <div class="" *ngIf="!last_name.valid">
-                    {{ "LastNameRequired" | translate }}
-                  </div>
-                </div>-->
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="direccion" class="col-form-label col-sm-2">
-                Direccion
-              </label>
-              <div class="col-sm-6">
-                <input type="date" class="form-control" name="direccion" required />
-                <!--<div class="alert alert-danger" *ngIf="
-              birth_date.invalid && (birth_date.dirty || birth_date.touched)
-            ">
-                  <div class="" *ngIf="!birth_date.valid">
-                    {{ "BirthDateRequired" | translate }}
-                  </div>
-                </div>-->
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="telefono" class="col-form-label col-sm-2">
-                Telefono
-              </label>
-              <div class="col-sm-6">
-                <input type="text" class="form-control" name="telefono" required />
-                <!--<div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
-                  <div class="" *ngIf="!email.valid">
-                    {{ "EmailRequired" | translate }}
-                  </div>
-                </div>-->
-              </div>
-            </div>
-            <div class="form-group row">
-              <div class="col-sm-6">
-                <button class="btn btn-primary" role="button" type="submit">
-                  Modificar
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+      <a class="btn btn-primary" role="button" href="/SupermercadoLeandro/index.php/usuario/modificacion?email=<?php echo $_GET["email"]; ?>">
+        <i class='bi bi-pencil-fill'></i> Editar
+      </a>
     </div>
   </div>
+  <div class="form-group row">
+    <div class="col col-2 text-nowrap mb-2">
+      Email
+    </div>
+    <div class="col-10">
+      <?php echo $usuario->getEmail(); ?>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col col-2 text-nowrap mb-2">
+      Nombre
+    </div>
+    <div class="col-10">
+      <?php echo $usuario->getNombre(); ?>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col col-2 text-nowrap mb-2">
+      Apellidos
+    </div>
+    <div class="col-10">
+      <?php echo $usuario->getApellidos(); ?>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col col-2 text-nowrap mb-2">
+      Direccion
+    </div>
+    <div class="col-10">
+      <?php echo $usuario->getDireccion(); ?>
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col col-2 text-nowrap mb-2">
+      Telefono
+    </div>
+    <div class="col-10">
+      <?php echo ($usuario->getTelefono() != 0) ? $usuario->getTelefono() : ''; ?>
+    </div>
+  </div>
+  <?php
+  //Muestra si el usuario es un empleado
+  if (gettype($empleado) == 'object') {
+    echo '<div class="form-group row">
+            <div class="col col-2 text-nowrap mb-2">
+              DNI
+            </div>
+            <div class="col-10">' .
+      $empleado->getDNI() .
+      '</div>
+          </div>
+          <div class="form-group row">
+            <div class="col col-2 text-nowrap mb-2">
+              Cargo
+            </div>
+            <div class="col-10">' .
+      $empleado->getCargo() .
+      '</div>
+          </div>
+          <div class="form-group row">
+            <div class="col col-2 text-nowrap mb-2">
+              ¿Admin?
+            </div>
+            <div class="col-10">';
+
+    if ($empleado->getTipo() == 0) {
+      echo "Sí";
+    } else {
+      echo "No";
+    }
+
+    echo '</div>
+          </div>
+          <div class="form-group row">
+            <div class="col col-2 text-nowrap mb-2">
+              Sueldo
+            </div>
+            <div class="col-10">' .
+      $empleado->getSueldo() .
+      '</div>
+          </div>';
+  }
+  ?>
 </div>

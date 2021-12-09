@@ -11,7 +11,6 @@ function autoloader($clase)
 
         if (file_exists($filename)) {
             require_once $filename;
-
             return;
         }
     }
