@@ -247,7 +247,7 @@ class UsuarioController extends BaseController
      * @param boolean $update Indicativo de la operacion a realizar. Si es create = false y si es update = true.
      * @return array Devuelve un array con los errores cometidos o un array vacío si no hay.
      */
-    public function validarCampos($respuesta, $update = false)
+    public function validarCampos($respuesta, $usuario,  $update = false)
     {
         $errores = array();
 
@@ -290,7 +290,7 @@ class UsuarioController extends BaseController
 
         //Si es una operacion de modificacion y se está modificando la contraseña
         if (isset($respuesta['check'])) {
-            if (!$this->comprobarContrasena($respuesta['email'], $respuesta['contrasena1'])) {
+            if (!$this->comprobarContrasena($usuario->getEmail(), $respuesta['contrasena1'])) {
                 $errores['contrasena1'] = "La contraseña es incorrecta";
             }
 
@@ -331,7 +331,7 @@ class UsuarioController extends BaseController
         $erroresUsu = array();
         //Comprueba si el usuario a modificar es el mismo que tiene iniciada sesión
         if (isset($respuesta['id'])) {
-            $erroresUsu = $this->validarCampos($respuesta, $modificacion);
+            $erroresUsu = $this->validarCampos($respuesta, $usuario, $modificacion);
         }
 
         $erroresEmp = $this->controllerEmpleado->validarEmpleado($respuesta, $usuario, $modificacion);

@@ -38,7 +38,7 @@ if (isset($_POST['modificar'])) {
       //Guarda el id del usuario a modificar en el $_POST para enviarlo a métodos más adelante
       $_POST['id'] = $_SESSION['usuario'];
       //Comprueba errores
-      $errores = $this->validarCampos($_POST, true);
+      $errores = $this->validarCampos($_POST, $usuario, true);
 
       //Si no hay errores
       if (empty($errores)) {
@@ -53,9 +53,9 @@ if (isset($_POST['modificar'])) {
         //Comprueba que se quiera cambiar la contraseña
         if (isset($_POST['check'])) {
           $usuario->setContrasena($_POST['contrasena2']);
+          $contrasenaCambiada = true;
         } else {
           $usuario->setContrasena($contrasena);
-          $contrasenaCambiada = true;
         }
 
         $this->updateUsuario($usuario, $contrasenaCambiada);
@@ -95,9 +95,9 @@ if (isset($_POST['modificar'])) {
         //Comprueba que se quiera cambiar la contraseña
         if (isset($_POST['check'])) {
           $empleado->setContrasena($_POST['contrasena2']);
+          $contrasenaCambiada = true;
         } else {
           $empleado->setContrasena($contrasena);
-          $contrasenaCambiada = true;
         }
       }
 
